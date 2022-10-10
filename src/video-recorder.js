@@ -212,6 +212,13 @@ export default class VideoRecorder extends Component {
     ) {
       this.tryToUnmuteReplayVideo()
     }
+    if ((this.state.isCameraOn != prevState.isCameraOn) && this.state.isCameraOn) {
+      if (window.URL) {
+        this.cameraVideo.srcObject = this.state.stream;
+      } else {
+        this.cameraVideo.src = this.state.stream;
+      }
+    }
   }
 
   componentWillUnmount () {
@@ -332,12 +339,6 @@ export default class VideoRecorder extends Component {
     })
     if (this.props.onCameraOn) {
       this.props.onCameraOn()
-    }
-
-    if (window.URL) {
-      this.cameraVideo.srcObject = stream
-    } else {
-      this.cameraVideo.src = stream
     }
 
     // there is probably a better way
